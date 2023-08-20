@@ -2,11 +2,36 @@ const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
 const cors = require("cors");
-
+const jwt = require("jsonwebtoken");
 app.use(cors());
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 
+const jwtSecret = "bnduoqhnwiodq123nh12451h29";
+
+function auth(req,res,next){
+    const authToken = req.headers['authorization'];
+
+    if(authToken != undefined){
+        const bearer = authToken.split(' ');
+        var token = bearer[1];
+        jwt.verify(token,jwtSecret, (err, data)=>{
+            if(err){
+                res.status(401);
+                res.json({err:"Token inválido"});
+            }else{
+                req.token = token;
+                req.loggedUser = {id: data.id, email: data.email};
+                next(); 
+            }
+        });
+    }else{
+        res.status(401);
+        res.json({err:"Autenticação inválida"});
+    }
+    
+
+}
 var DB  = {
     games: [
         {
@@ -27,10 +52,29 @@ var DB  = {
             year: 2012,
             price: 120
         }
+    ],
+    users:[
+        {
+            id:1,
+            name: "Filipe Venturi",
+            email:"filipe@hotmail.com",
+            password:"123"
+
+        },{
+            id:2,
+            name: "Ivana Carolina",
+            email:"ivana7@hotmail.com",
+            password:"234"
+        },{
+            id:3,
+            name: "Carol Venturi",
+            email:"caroline@hotmail.com",
+            password:"345"
+        }
     ]
 }
 
-app.get("/games", (req,res)=>{
+app.get("/games",auth, (req,res)=>{
     res.statusCode = 200;
     res.json(DB.games);
 })
@@ -104,6 +148,41 @@ app.put("/game/:id", (req,res)=>{
         }
     }
 
+})
+
+app.post("/auth", (req,res)=>{
+    var {email,password} = req.body; 
+    if(email != undefined){
+
+        var user = DB.users.find(u=> u.email == email);
+        if(user!=undefined){
+
+            if(user.password == password){
+
+                jwt.sign({id: user.id , email: user.email}, jwtSecret, {expiresIn:'48h'}, (err, token)=>{
+                    if(err){
+                        res.status(400);
+                        res.json({err:"Falha"});
+                    }else{
+                        res.status(200);
+                        res.json({token: token});
+                    }
+                })
+            }else{
+                res.status(401);
+                res.json({err:"Senha inválida!"});
+            }
+        
+
+        }else{
+            res.status(404);
+            res.json({err:"O email não existe na base de dados!"})
+        }
+        
+    }else{
+        res.status(400);
+        res.json({err:"Email inválido!"})
+    }
 })
 
 app.listen(8080, ()=>{
