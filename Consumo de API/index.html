@@ -4,31 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Games</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-    <hr>
-    <h2>Login</h2>
-    <input type="text" name="email" id="email" placeholder="email">
-    <input type="text" name="password" id="password" placeholder="password">
-    <button type="button" onclick="login()">Entrar</button>
-    <hr>
-    <h2>Lista de Jogos</h2>
-    <h3><button><a href="file:///C:/Users/Felipe/Desktop/Cursos/cursoNode/M12/Consumo%20de%20API/index.html">Atualizar</a></button></h3>
-    <ul id="games"></ul>
-    <hr>
-    <h2>Adicionar Game</h2>
-    <input type="text" name="title" id="title" placeholder="Título">
-    <input type="number" name="year" id="year" placeholder="Ano">
-    <input type="number" name="price" id="price" placeholder="Preço">
-    <button onclick="createGame()">Adicionar</button>
-    <hr>
-    <h2>Editar Game</h2>
-    <input type="number" name="idEdit" id="idEdit" placeholder="Id" readonly>
-    <input type="text" name="titleEdit" id="titleEdit" placeholder="Título">
-    <input type="number" name="yearEdit" id="yearEdit" placeholder="Ano">
-    <input type="number" name="priceEdit" id="priceEdit" placeholder="Preço">
-    <button onclick="setGame()">Editar</button>
+    <div class="container">
+        <br>
+        <div class="card">
+        <div class="card-header">
+            <h2>Login</h2>
+        </div>
+        <div class="card-body">
+            <input type="text" name="email" id="email" placeholder="email">
+            <input type="text" name="password" id="password" placeholder="password"><br><br>
+            <button class="btn btn-success" type="button" onclick="login()">Entrar</button>
+        </div>
+        </div>
+        <br>
+        <div class="card">
+        <div class="card-header">
+            <h2>Lista de Jogos</h2>
+            <a class="btn btn-success" href="file:///C:/Users/Felipe/Desktop/Cursos/cursoNode/M12/Consumo%20de%20API/index.html">Atualizar</a>
+        </div>
+        <div class="card-body">
+            <ul id="games"></ul>
+        </div>
+        </div>
+        <br>
 
+        <div class="card">
+        <div class="card-header">
+            <h2>Adicionar Game</h2>
+        </div>
+        <div class="card-body">
+            <input type="text" name="title" id="title" placeholder="Título">
+        <input type="number" name="year" id="year" placeholder="Ano">
+        <input type="number" name="price" id="price" placeholder="Preço"><br><br>
+        <button class="btn btn-primary" onclick="createGame()">Adicionar</button>
+        </div>
+        </div>
+        <br>
+        <div class="card">
+        <div class="card-header">
+            <h2>Editar Game</h2>
+        </div>
+        <div class="card-body">
+            <input type="number" name="idEdit" id="idEdit" placeholder="Id" readonly>
+        <input type="text" name="titleEdit" id="titleEdit" placeholder="Título">
+        <input type="number" name="yearEdit" id="yearEdit" placeholder="Ano">
+        <input type="number" name="priceEdit" id="priceEdit" placeholder="Preço"><br><br>
+        <button class="btn btn-primary" onclick="setGame()">Editar</button>
+        </div>
+    </div>
+    <br>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script>
